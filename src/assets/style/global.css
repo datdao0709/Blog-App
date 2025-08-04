@@ -1,0 +1,35 @@
+/* Reset một số mặc định */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Toàn bộ body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Layout căn chỉnh margin/padding */
+.ant-layout {
+    min-height: 100vh;
+}
+
+.ant-layout-header {
+    background: #fff !important;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+/* Responsive menu ẩn khi dưới 768px */
+@media (max-width: 768px) {
+    .ant-layout-sider {
+        display: none !important;
+    }
+
+    .ant-layout-content {
+        margin: 8px !important;
+    }
+}
