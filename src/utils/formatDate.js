@@ -1,26 +1,37 @@
-export const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    if (isNaN(date)) return 'Ngày không hợp lệ';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi';
 
-    const now = new Date();
-    const diffMs = now - date;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+dayjs.locale('vi');
+dayjs.extend(relativeTime);
 
-    if (diffDays === 0 && diffHours === 0) {
-        return `${diffMinutes} phút trước`;
-    } else if (diffDays === 0) {
-        return `${diffHours} giờ trước`;
-    } else if (diffDays < 7) {
-        return `${diffDays} ngày trước`;
+export const formatCommentTime = (createdAt, updatedAt) => {
+    if (!createdAt) return '';
+
+    const created = dayjs(createdAt);
+    const updated = updatedAt ? dayjs(updatedAt) : null;
+
+    let createdText = '';
+    const diffDaysCreated = dayjs().diff(created, 'day');
+    if (diffDaysCreated < 7) {
+        createdText = created.fromNow();
     } else {
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        createdText = created.format('DD/MM/YYYY HH:mm');
     }
+
+    let updatedText = '';
+    if (
+        updated &&
+        updated.isValid() &&
+        !updated.isSame(created)
+    ) {
+        const diffDaysUpdated = dayjs().diff(updated, 'day');
+        if (diffDaysUpdated < 7) {
+            updatedText = `· chỉnh sửa ${updated.fromNow()}`;
+        } else {
+            updatedText = `· chỉnh sửa ${updated.format('DD/MM/YYYY HH:mm')}`;
+        }
+    }
+
+    return `${createdText}${updatedText}`;
 };

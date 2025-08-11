@@ -1,12 +1,21 @@
 import React from 'react';
-import PostList from './PostList';
+import PostList from '../pages/post/PostList';
+import useAuth from '../hooks/useAuth';
+import {Typography, Layout} from 'antd';
+
+const {Title} = Typography;
+const {Content} = Layout;
 
 const Home = () => {
+    const {user} = useAuth();
+
     return (
-        <div className="home-page">
-            <h1>Trang chủ</h1>
-            <PostList />
-        </div>
+        <Layout className="home-page">
+            <Content className="home-page-content">
+                <Title level={2}>Trang chủ</Title>
+                <PostList isAuthenticated={!!user}/>
+            </Content>
+        </Layout>
     );
 };
 
