@@ -25,7 +25,7 @@ export default function AppFooter() {
                     <FacebookOutlined/>
                 </a>
                 <a
-                    href="https://github.com"
+                    href="https://github.com/datdao0709/Blog-App"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{color: '#181717'}}

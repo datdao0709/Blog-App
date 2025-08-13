@@ -1,5 +1,5 @@
-import {getItem, setItem} from '../utils/localStorage';
-import {generateId} from '../utils/generateId';
+import { getItem, setItem } from '../utils/localStorage';
+import { generateId } from '../utils/generateId';
 import sanitizeHtml from 'sanitize-html';
 
 const COMMENTS_KEY = 'comments';
@@ -27,7 +27,8 @@ export const addComment = (postId, comment) => {
         author: comment.author || 'Khách',
         authorId: comment.authorId || null,
         createdAt: now,
-        updatedAt: now
+        updatedAt: now,
+        reactions: {}, // Thêm trường reactions để lưu số lượng cảm xúc (không bắt buộc nếu dùng localStorage riêng)
     };
 
     comments.push(newComment);
@@ -47,7 +48,7 @@ export const updateComment = (commentId, updatedData) => {
                 content: typeof updatedData.content === 'string'
                     ? sanitizeHtml(updatedData.content, SANITIZE_OPTIONS).trim()
                     : c.content,
-                updatedAt: new Date().toISOString()
+                updatedAt: new Date().toISOString(),
             };
             return updatedComment;
         }
